@@ -10,14 +10,21 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float _jumpPower = 5f;
     [SerializeField] float _max = 5f;
     [SerializeField] GameObject _brainLenge;
-    List<GameObject> _allyList = new List<GameObject>();
+    [SerializeField] GameObject _mazzle;
+    List<EnemyBase> _allyList = new List<EnemyBase>();
+    Animator _anim;
+    float minas = 1;
     bool _jump;
     bool _brain;
     bool _gameover;
+    bool _gameoverjump;
+    [SerializeField] CrosshairController _mouse;
     // Start is called before the first frame update
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _anim = GetComponent<Animator>();
+        _mouse = GetComponent<CrosshairController>();
     }
 
     // Update is called once per frame
@@ -32,6 +39,7 @@ public class PlayerController : MonoBehaviour
             {
                 //velocity.y = _jumpPower;
                 _rb.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
+                _jump = false;
             }
             if (Input.GetButtonDown("Fire2") && !_brain)
             {
@@ -41,48 +49,71 @@ public class PlayerController : MonoBehaviour
             }
             if (Input.GetButtonDown("Fire1"))
             {
+                Vector2 vector = new Vector2(10f * minas, _mouse.mousePosition.y);
+                _allyList[0].Throw(vector);
                 Debug.Log("‘Å‚¿o‚³‚ê‚½‚¼II");
             }
         }
         else
         {
             h = 0;
+            if (!_gameoverjump)
+            {
+                //_rb.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
+                _gameoverjump = true;
+            }
+
         }
     }
     private void FixedUpdate()
     {
         _rb.velocity = new Vector2(h * _speed, _rb.velocity.y);
+        if (Input.GetButtonDown("Jump") && _jump)
+        {
+            //velocity.y = _jumpPower;
+            _rb.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
+            _jump = false;
+        }
+    }
+    private void LateUpdate()
+    {
+        if(_anim)
+        {
+            _anim.SetFloat("SpeedX", Mathf.Abs(_rb.velocity.x));
+            _anim.SetFloat("SpeedY", Mathf.Abs(_rb.velocity.y));
+            _anim.SetBool("IsGround", _jump);
+            _anim.SetBool("Brain", _brain);
+        }
     }
     void Flip(float horizontal)
     {
         if(horizontal > 0)
         {
             transform.localScale = new Vector2(Mathf.Abs(transform.localScale.x), transform.localScale.y);
+            minas = 1;
         }
         else if(horizontal < 0)
         {
             transform.localScale = new Vector2(-1 * Mathf.Abs(transform.localScale.x), transform.localScale.y);
+            minas = -1;
         }
     }
-    public void GetAlly(GameObject ally)
+    public void GetAlly(EnemyBase ally)
     {
-        _allyList.Add(ally);
         if(_allyList.Count > _max)
         {
-            Destroy(_allyList[0]);
-            _allyList.RemoveAt(0);
+            _allyList.Add(ally);
         }
     }
-    public void RemoveAlly(GameObject ally)
+    public void RemoveAlly(EnemyBase ally)
     {
-        _allyList.RemoveAt(0);
-        Destroy(ally);
+        _allyList.Remove(ally);
     }
     IEnumerator Brawashtime()
     {
         yield return new WaitForSeconds(2f);
         _brainLenge.gameObject.SetActive(false);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         _brain = false;
     }
     private void OnCollisionEnter2D(Collision2D collision)
@@ -104,7 +135,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Gameover");
             _gameover = true;
         }
-        if(collision.gameObject.tag == "item")
+        if (collision.gameObject.tag == "item")
         {
             _max++;
         }

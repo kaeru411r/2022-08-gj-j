@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CrosshairController : MonoBehaviour
 {
+    public Vector3 mousePosition;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,7 +14,7 @@ public class CrosshairController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = 0;
         transform.position = mousePosition;
     }
