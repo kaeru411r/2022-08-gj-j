@@ -10,8 +10,6 @@ abstract public class EnemyBase : MonoBehaviour
     [SerializeField] int _maxHp = 1;
     [Tooltip("çUåÇóÕ")]
     [SerializeField] int _atk = 1;
-    [Tooltip("ìGèÛë‘Ç≈ÇÃçUåÇÇÃÉNÅ[ÉãÉ^ÉCÉÄ")]
-    [SerializeField] float _attackCoolTime = 1;
     [Tooltip("ñ°ï˚ÇÃéûÇÃÉåÉCÉÑÅ[")]
     [SerializeField] LayerMask _friendLayer;
     [Tooltip("ìGÇÃéûÇÃÉåÉCÉÑÅ[")]
@@ -34,7 +32,7 @@ abstract public class EnemyBase : MonoBehaviour
     public int HP { get => _hp;}
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         _respawnPoint = transform.position;
     }
@@ -44,11 +42,10 @@ abstract public class EnemyBase : MonoBehaviour
     {
         if(_state == EnemyState.Idol)
         {
-            Attack();
+            EnemyUpdate();
         }
         else if(_state == EnemyState.Follow)
         {
-            FollowPlayer();
         }
         else if(_state == EnemyState.Throw)
         {
@@ -56,9 +53,17 @@ abstract public class EnemyBase : MonoBehaviour
         }
     }
 
-
-
-    
+    private void FixedUpdate()
+    {
+        if(_state == EnemyState.Idol)
+        {
+            EnemyFixedUpdate();
+        }
+        else if(_state == EnemyState.Follow)
+        {
+            FollowPlayer();
+        }
+    }
 
     /// <summary>
     /// ìnÇµÇΩê®óÕÇ…à⁄ÇÈ
@@ -144,9 +149,20 @@ abstract public class EnemyBase : MonoBehaviour
     }
 
     /// <summary>
-    /// ìGÇÃçUåÇ
+    /// ìGÇÃçsìÆ
     /// </summary>
-    abstract public void Attack();
+    virtual public void EnemyUpdate()
+    {
+
+    }
+
+    /// <summary>
+    /// ìGÇÃçsìÆ FixedUpdate
+    /// </summary>
+    virtual public void EnemyFixedUpdate()
+    {
+
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
