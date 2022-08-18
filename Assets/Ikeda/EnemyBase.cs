@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 abstract public class EnemyBase : MonoBehaviour
 {
     [Tooltip("技能")]
@@ -23,6 +24,8 @@ abstract public class EnemyBase : MonoBehaviour
     Vector2 _respawnPoint;
     /// <summary>エネミーの状態</summary>
     EnemyState _state;
+    /// <summary>リジッドボディ</summary>
+    Rigidbody2D _rb;
 
     /// <summary>技能</summary>
     public EnemyType Type { get => _type; }
@@ -35,6 +38,11 @@ abstract public class EnemyBase : MonoBehaviour
     void Awake()
     {
         _respawnPoint = transform.position;
+    }
+
+    private void Start()
+    {
+        _rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -82,18 +90,51 @@ abstract public class EnemyBase : MonoBehaviour
             else if(hand == EnemyHand.Player)
             {
                 gameObject.layer = _friendLayer;
+                _state = EnemyState.Follow;
             }
             _hand = hand;
             return true;
         }
         return false;
-    } 
+    }
+
+
+    /// <summary>
+    /// ダメージを食らう
+    /// </summary>
+    /// <param name="damage"></param>
+    public void Damage(int damage)
+    {
+        _hp -= damage;
+        if (_hp <= 0)
+        {
+            Death();
+        }
+    }
+
+    public bool Throw(Vector2 axis, float speed)
+    {
+        return Throw(axis * speed);
+    }
+
+    public bool Throw(Vector2 velocity)
+    {
+        if (_hand == EnemyHand.Player)
+        {
+            _rb.velocity = velocity;
+            _state = EnemyState.Throw;
+            return true;
+        }
+
+        return false;
+    }
 
     /// <summary>
     /// リスポーンする
     /// </summary>
     void Respawn()
     {
+        _state = EnemyState.Idol;
         transform.position = _respawnPoint;
         HPReset();
     }
@@ -118,18 +159,6 @@ abstract public class EnemyBase : MonoBehaviour
     }
 
 
-    /// <summary>
-    /// ダメージを食らう
-    /// </summary>
-    /// <param name="damage"></param>
-    public void Damage(int damage)
-    {
-        _hp -= damage;
-        if(_hp <= 0)
-        {
-            Death();
-        }
-    }
 
 
     /// <summary>
