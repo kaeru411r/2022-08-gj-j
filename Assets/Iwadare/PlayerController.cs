@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     List<GameObject> _allyList = new List<GameObject>();
     bool _jump;
     bool _brain;
+    bool _gameover;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,23 +23,30 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        h = Input.GetAxis("Horizontal");
-        //Vector2 velocity = _rb.velocity;
-        Flip(h);
-        if (Input.GetButtonDown("Jump") && _jump)
+        if (!_gameover)
         {
-            //velocity.y = _jumpPower;
-            _rb.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
+            h = Input.GetAxis("Horizontal");
+            //Vector2 velocity = _rb.velocity;
+            Flip(h);
+            if (Input.GetButtonDown("Jump") && _jump)
+            {
+                //velocity.y = _jumpPower;
+                _rb.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
+            }
+            if (Input.GetButtonDown("Fire2") && !_brain)
+            {
+                _brainLenge.gameObject.SetActive(true);
+                _brain = true;
+                StartCoroutine(Brawashtime());
+            }
+            if (Input.GetButtonDown("Fire1"))
+            {
+                Debug.Log("打ち出されたぞ！！");
+            }
         }
-        if(Input.GetButtonDown("Fire2") && !_brain)
+        else
         {
-            _brainLenge.gameObject.SetActive(true);
-            _brain = true;
-            StartCoroutine(Brawashtime());
-        }
-        if (Input.GetButtonDown("Fire1"))
-        {
-            Debug.Log("打ち出されたぞ！！");
+            h = 0;
         }
     }
     private void FixedUpdate()
@@ -56,13 +64,19 @@ public class PlayerController : MonoBehaviour
             transform.localScale = new Vector2(-1 * Mathf.Abs(transform.localScale.x), transform.localScale.y);
         }
     }
-    public void Getally(GameObject ally)
+    public void GetAlly(GameObject ally)
     {
         _allyList.Add(ally);
         if(_allyList.Count > _max)
         {
+            Destroy(_allyList[0]);
             _allyList.RemoveAt(0);
         }
+    }
+    public void RemoveAlly(GameObject ally)
+    {
+        _allyList.RemoveAt(0);
+        Destroy(ally);
     }
     IEnumerator Brawashtime()
     {
@@ -76,6 +90,23 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             _jump = true;
+        }
+        if(collision.gameObject.tag == "Enemy")
+        {
+            Debug.Log("Gameover");
+            _gameover = true;
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "EnemyAttack")
+        {
+            Debug.Log("Gameover");
+            _gameover = true;
+        }
+        if(collision.gameObject.tag == "item")
+        {
+            _max++;
         }
     }
 }
