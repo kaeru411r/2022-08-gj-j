@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class IkedaTestEnemy : EnemyBase
 {
-    public override void Attack()
+    public override void EnemyUpdate()
     {
         throw new System.NotImplementedException();
     }
