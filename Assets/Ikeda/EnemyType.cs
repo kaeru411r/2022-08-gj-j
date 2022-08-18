@@ -2,7 +2,7 @@
 /// <summary>
 /// “G‚Ì‹Z”\
 /// </summary>
-enum EnemyType
+public enum EnemyType
 {
 
 }
