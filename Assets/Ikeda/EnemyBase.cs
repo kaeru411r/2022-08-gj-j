@@ -6,15 +6,23 @@ using UnityEngine;
 public class EnemyBase : MonoBehaviour
 {
     [Tooltip("ãZî\")]
-    [SerializeField] EnemyType _enemyType;
+    [SerializeField] EnemyType _type;
     [Tooltip("HPèâä˙íl")]
-    [SerializeField] int _hp = 1;
+    [SerializeField] int _maxHp = 1;
 
+    /// <summary>HP</summary>
+    int _hp;
     /// <summary>ê®óÕ</summary>
     EnemyHand _hand = EnemyHand.Enemy;
 
+    /// <summary>ãZî\</summary>
+    public EnemyType Type { get => _type; }
     /// <summary>ê®óÕ</summary>
     public EnemyHand Hand { get => _hand; }
+    /// <summary>HP</summary>
+    public int HP { get => _hp;}
+
+    /// <summary>HP</summary>
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +33,14 @@ public class EnemyBase : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(_hand == EnemyHand.Enemy)
+        {
+
+        }
+        else if(_hand == EnemyHand.Player)
+        {
+
+        }
     }
 
     /// <summary>
@@ -42,6 +57,11 @@ public class EnemyBase : MonoBehaviour
         }
         return false;
     } 
+
+    void FollowPlayer()
+    {
+
+    }
 
 }
 
