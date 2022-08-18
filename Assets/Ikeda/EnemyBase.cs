@@ -2,15 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 abstract public class EnemyBase : MonoBehaviour
 {
     [Tooltip("技能")]
     [SerializeField] EnemyType _type;
     [Tooltip("HP初期値")]
     [SerializeField] int _maxHp = 1;
+    [Tooltip("攻撃力")]
+    [SerializeField] int _atk = 1;
     [Tooltip("敵状態での攻撃のクールタイム")]
     [SerializeField] float _attackCoolTime = 1;
+    [Tooltip("味方の時のレイヤー")]
+    [SerializeField] LayerMask _friendLayer;
+    [Tooltip("敵の時のレイヤー")]
+    [SerializeField] LayerMask _enemyLayer;
 
     /// <summary>HP</summary>
     int _hp;
@@ -51,6 +56,8 @@ abstract public class EnemyBase : MonoBehaviour
         }
     }
 
+
+
     
 
     /// <summary>
@@ -62,34 +69,94 @@ abstract public class EnemyBase : MonoBehaviour
     {
         if(hand != _hand)
         {
+            if(hand == EnemyHand.Enemy)
+            {
+                gameObject.layer = _enemyLayer;
+                Respawn();
+            }
+            else if(hand == EnemyHand.Player)
+            {
+                gameObject.layer = _friendLayer;
+            }
             _hand = hand;
             return true;
         }
         return false;
     } 
 
+    /// <summary>
+    /// リスポーンする
+    /// </summary>
     void Respawn()
     {
         transform.position = _respawnPoint;
+        HPReset();
     }
 
+    /// <summary>
+    /// プレイヤーに追従する
+    /// </summary>
     void FollowPlayer()
     {
-
+        
     }
 
-    void Hit()
+
+    /// <summary>
+    /// 敵に当たる
+    /// </summary>
+    /// <param name="enemy"></param>
+    void Hit(EnemyBase enemy)
     {
+        enemy.Damage(_atk);
         Respawn();
     }
 
+
+    /// <summary>
+    /// ダメージを食らう
+    /// </summary>
+    /// <param name="damage"></param>
+    public void Damage(int damage)
+    {
+        _hp -= damage;
+        if(_hp <= 0)
+        {
+            Death();
+        }
+    }
+
+
+    /// <summary>
+    /// 死ぬ
+    /// </summary>
+    void Death()
+    {
+        Destroy(gameObject);
+    }
+
+    /// <summary>
+    /// HPをリセットする
+    /// </summary>
+    void HPReset()
+    {
+        _hp = _maxHp;
+    }
+
+    /// <summary>
+    /// 敵の攻撃
+    /// </summary>
     abstract public void Attack();
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(_state == EnemyState.Throw)
         {
-            Hit();
+            EnemyBase enemy;
+            if(TryGetComponent<EnemyBase>(out enemy))
+            {
+                Hit(enemy);
+            }
         }
     }
 
@@ -105,6 +172,9 @@ public enum EnemyHand{
     Player,
 }
 
+/// <summary>
+/// エネミーの状態
+/// </summary>
 public enum EnemyState
 {
     /// <summary>待機</summary>
