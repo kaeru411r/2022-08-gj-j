@@ -83,12 +83,6 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         _rb.velocity = new Vector2(h * _speed, _rb.velocity.y);
-        if (Input.GetButtonDown("Jump") && _jump)
-        {
-            //velocity.y = _jumpPower;
-            _rb.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
-            _jump = false;
-        }
     }
     private void LateUpdate()
     {
