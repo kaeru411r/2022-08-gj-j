@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3279150549435942893}
   - component: {fileID: 4239290697390188711}
   - component: {fileID: 1710353633146249188}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: powerrock
   m_TagString: Item
   m_Icon: {fileID: 0}
