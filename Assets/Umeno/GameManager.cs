@@ -17,9 +17,9 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(_bossEnemy.HP >= 0 && _bossEnemy)
-        {
-            SceneManager.LoadScene(_scnename);
-        }
+        //if(_bossEnemy.HP >= 0 && _bossEnemy)
+        //{
+        //    SceneManager.LoadScene(_scnename);
+        //}
     }
 }
