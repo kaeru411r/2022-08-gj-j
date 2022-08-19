@@ -9,14 +9,17 @@ public class FireController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Debug.LogWarning("マウスを追従するオブジェクトにCrosshairControllerコンポーネントをつけないといけません。");
     }
 
     // Update is called once per frame
     void Update()
     {
         _timer += Time.deltaTime;
-        Vector2 dir = _crosshair.position - transform.position;
-        transform.up = dir;
+        if (_crosshair)
+        {
+            Vector2 dir = _crosshair.position - transform.position;
+            transform.up = dir;
+        }
     }
 }
