@@ -161,6 +161,15 @@ abstract public class EnemyBase : MonoBehaviour
     {
         if (_hand == EnemyHand.Player)
         {
+            Collider2D c;
+            if(TryGetComponent<Collider2D>(out c))
+            {
+                c.isTrigger = true;
+            }
+            if (_playerController)
+            {
+                _playerController.RemoveAlly(this);
+            }
             transform.position = _playerController.transform.position;
             _rb.velocity = velocity;
             _state = EnemyState.Throw;
@@ -176,10 +185,6 @@ abstract public class EnemyBase : MonoBehaviour
     void Respawn()
     {
         JumpSide(EnemyHand.Enemy);
-        if (_playerController)
-        {
-            _playerController.RemoveAlly(this);
-        }
         _state = EnemyState.Idol;
         transform.position = _respawnPoint;
         HPReset();
@@ -209,7 +214,7 @@ abstract public class EnemyBase : MonoBehaviour
             _rb.velocity = new Vector2(0, _rb.velocity.y);
         }
 
-        float dir = target.x - transform.position.x;
+        float dir = target.x - transform.position.x != 0 ? target.x - transform.position.x : 1;
         transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * -(Mathf.Abs(dir) / dir), transform.localScale.y, transform.localScale.z);
 
 
@@ -223,6 +228,11 @@ abstract public class EnemyBase : MonoBehaviour
     void Hit(EnemyBase enemy)
     {
         enemy.Damage(_atk);
+        Collider2D c;
+        if(TryGetComponent<Collider2D>(out c))
+        {
+            c.isTrigger = false;
+        }
         Respawn();
     }
 
@@ -245,6 +255,7 @@ abstract public class EnemyBase : MonoBehaviour
         }
         if(_type == EnemyType.Boss)
         {
+            Debug.Log(1);
             GameManager.Instance.GameCrear();
         }
     }
@@ -288,6 +299,7 @@ abstract public class EnemyBase : MonoBehaviour
         {
             return;
         }
+        Debug.Log(collision.gameObject);
         if (_state == EnemyState.Throw)
         {
             EnemyBase enemy;
@@ -311,9 +323,28 @@ abstract public class EnemyBase : MonoBehaviour
                 PlayerController p = collision.gameObject.GetComponentInParent<PlayerController>();
                 if (p)
                 {
-                    p.GetAlly(this);
-                    JumpSide(EnemyHand.Player);
+                    if (p.GetAlly(this))
+                    {
+                        JumpSide(EnemyHand.Player);
+                    }
                 }
+            }
+        }
+        if (collision.gameObject.layer == gameObject.layer)
+        {
+            return;
+        }
+        Debug.Log(collision.gameObject);
+        if (_state == EnemyState.Throw)
+        {
+            EnemyBase enemy;
+            if (collision.gameObject.TryGetComponent<EnemyBase>(out enemy))
+            {
+                Hit(enemy);
+            }
+            else
+            {
+                Respawn();
             }
         }
     }

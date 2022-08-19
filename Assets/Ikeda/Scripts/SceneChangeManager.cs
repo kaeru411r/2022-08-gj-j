@@ -56,6 +56,7 @@ public class SceneChangeManager : MonoBehaviour
             return;
         }
 
+        Cursor.visible = true;
         SceneManager.LoadScene(index);
     }
 
@@ -80,7 +81,7 @@ public class SceneChangeManager : MonoBehaviour
         {
             if (_stages[i].StageIndex == SceneManager.GetActiveScene().buildIndex)
             {
-                StageUnlock(i);
+                StageUnlock(i + 1);
             }
         }
     }

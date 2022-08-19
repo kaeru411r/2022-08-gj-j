@@ -61,9 +61,12 @@ public class PlayerController : MonoBehaviour
                 Vector2 vector = new Vector2(6f * minas, 6f);
                 if (_allyList != null)
                 {
-                    _allyList[0].Throw(vector);
+                    if (_allyList.Count > 0)
+                    {
+                        _allyList[0].Throw(vector);
+                        Debug.Log("打ち出されたぞ！！");
+                    }
                 }
-                Debug.Log("打ち出されたぞ！！");
             }
             if(h != 0 && !_audioplay && _jump)
             {
