@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour
     }
     public void GetAlly(EnemyBase ally)
     {
-        if(_allyList.Count > _max)
+        if(_allyList.Count < _max)
         {
             _allyList.Add(ally);
         }
