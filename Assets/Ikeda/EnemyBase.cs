@@ -37,6 +37,8 @@ abstract public class EnemyBase : MonoBehaviour
     public EnemyHand Hand { get => _hand; }
     /// <summary>リジッドボディ</summary>
     public Rigidbody2D Rb { get => _rb; }
+    /// <summary>HP</summary>
+    public int HP { get => _hp; }
     
     
     static public Action OnDamage;
@@ -117,6 +119,10 @@ abstract public class EnemyBase : MonoBehaviour
     public void Damage(int damage)
     {
         _hp -= damage;
+        if(_type == EnemyType.Boss)
+        {
+            CallOnDamage();
+        }
         if (_hp <= 0)
         {
             Death();
