@@ -245,7 +245,7 @@ abstract public class EnemyBase : MonoBehaviour
         }
         if(_type == EnemyType.Boss)
         {
-            SceneChangeManager.Instance.StageCrear();
+            GameManager.Instance.GameCrear();
         }
     }
 
