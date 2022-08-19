@@ -8,20 +8,20 @@ public class PlayerController : MonoBehaviour
     float h;
     [SerializeField] float _speed = 5f;
     [SerializeField] float _jumpPower = 5f;
-    [SerializeField] float _max = 5f;
+    public float _max = 5f;
     [SerializeField] GameObject _brainLenge;
     [SerializeField] GameObject _mazzle;
     List<EnemyBase> _allyList = new List<EnemyBase>();
     Animator _anim;
     AudioSource _audio;
-    //EnemyBase _hide;
+    EnemyBase _hide;
     float minas = 1;
     bool _jump;
     bool _brain;
     bool _gameover;
     bool _gameoverjump;
     bool _audioplay;
-    bool _castTime;
+    bool _hand;
     [SerializeField] CrosshairController _mouse;
     // Start is called before the first frame update
     void Start()
@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
         _anim = GetComponent<Animator>();
         _mouse = GetComponent<CrosshairController>();
         _audio = GetComponent<AudioSource>();
-        //_hide = GetComponent<EnemyBase>();
+        _hide = GetComponent<EnemyBase>();
     }
 
     // Update is called once per frame
