@@ -6,7 +6,23 @@ using UnityEngine.SceneManagement;
 
 public class SceneChangeManager : MonoBehaviour
 {
-    static public SceneChangeManager Instance;
+    static private SceneChangeManager _instance;
+    static public SceneChangeManager Instance
+    {
+        get
+        {
+            if (!_instance)
+            {
+                _instance = FindObjectOfType<SceneChangeManager>();
+                if(_instance == null)
+                {
+                    Debug.LogError($"{nameof(SceneChangeManager)}が見つかりません");
+                    return null;
+                }
+            }
+            return _instance;
+        }
+    }
     [Tooltip("ステージの番号")]
     [SerializeField] Stage[] _stages;
     [Tooltip("ステージ以外のシーンの数")]
@@ -16,12 +32,13 @@ public class SceneChangeManager : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance == null)
+        if (_instance)
         {
-            Destroy(Instance);
-            Instance = this;
+            Destroy(_instance);
         }
+        _instance = this;
     }
+
 
     private void Start()
     {
