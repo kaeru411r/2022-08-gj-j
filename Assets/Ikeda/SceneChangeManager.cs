@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.SceneManagement;
+using System;
+using System.Linq;
 
 public class SceneChangeManager : MonoBehaviour
 {
@@ -14,7 +16,7 @@ public class SceneChangeManager : MonoBehaviour
             if (!_instance)
             {
                 _instance = FindObjectOfType<SceneChangeManager>();
-                if(_instance == null)
+                if (_instance == null)
                 {
                     Debug.LogError($"{nameof(SceneChangeManager)}‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ");
                     return null;
@@ -34,7 +36,8 @@ public class SceneChangeManager : MonoBehaviour
     {
         if (_instance)
         {
-            Destroy(_instance);
+            Destroy(gameObject);
+            return;
         }
         _instance = this;
     }
@@ -47,11 +50,39 @@ public class SceneChangeManager : MonoBehaviour
 
     public void LoadScene(int index)
     {
-        if(index < 0) return;
-        if(EditorBuildSettings.scenes.Length < index) return; 
+        if (index < 0) return;
+        if (EditorBuildSettings.scenes.Length < index) return;
 
         SceneManager.LoadScene(index);
     }
+
+    public void LoadStage(int index)
+    {
+        if (index < 0) return;
+        if (_stages.Length - 1 < index) return;
+
+        SceneManager.LoadScene((int)_stages[index].StageIndex);
+    }
+
+    public void StageUnlock(int index)
+    {
+        if (index < 0) return;
+        if (_stages.Length - 1 < index) return;
+        _stages[index].IsOpen = true;
+    }
+
+    public void StageCrear()
+    {
+        for (int i = 0; i < _stages.Length; i++)
+        {
+            if (_stages[i].StageIndex == SceneManager.GetActiveScene().buildIndex)
+            {
+                StageUnlock(i);
+            }
+        }
+    }
+
+
     private void OnValidate()
     {
         if (_stages != null)
