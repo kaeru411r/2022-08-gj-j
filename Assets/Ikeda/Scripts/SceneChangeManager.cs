@@ -82,7 +82,7 @@ public class SceneChangeManager : MonoBehaviour
         }
     }
 
-
+#if UNITY_EDITOR
     private void OnValidate()
     {
         if (_stages != null)
@@ -93,4 +93,5 @@ public class SceneChangeManager : MonoBehaviour
             }
         }
     }
+#endif
 }

@@ -23,6 +23,8 @@ abstract public class EnemyBase : MonoBehaviour
     [SerializeField] float _warpDistance = 3f;
     [Tooltip("プレイヤーへの接近を辞める距離")]
     [SerializeField] float _near;
+    [Tooltip("門番がリポップする距離")]
+    [SerializeField] float _repopDistance = 10;
     [Tooltip("敵が味方になるときに呼ぶ")]
     [SerializeField] UnityEvent _jumpSideEvent;
 
@@ -159,6 +161,7 @@ abstract public class EnemyBase : MonoBehaviour
     {
         if (_hand == EnemyHand.Player)
         {
+            transform.position = _playerController.transform.position;
             _rb.velocity = velocity;
             _state = EnemyState.Throw;
             return true;
@@ -231,11 +234,28 @@ abstract public class EnemyBase : MonoBehaviour
     /// </summary>
     void Death()
     {
-        Destroy(gameObject);
+        if (_type != EnemyType.GimmickEnemy)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+            StartCoroutine(RePop());
+        }
         if(_type == EnemyType.Boss)
         {
             SceneChangeManager.Instance.StageCrear();
         }
+    }
+
+    IEnumerator RePop()
+    {
+        while(Vector3.Distance(_respawnPoint, _playerController.transform.position) <= _repopDistance)
+        {
+            yield return null;
+        }
+        gameObject.SetActive(true);
     }
 
     /// <summary>
@@ -267,7 +287,7 @@ abstract public class EnemyBase : MonoBehaviour
         if (_state == EnemyState.Throw)
         {
             EnemyBase enemy;
-            if (TryGetComponent<EnemyBase>(out enemy))
+            if (collision.gameObject.TryGetComponent<EnemyBase>(out enemy))
             {
                 Hit(enemy);
             }
