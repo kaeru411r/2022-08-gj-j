@@ -121,18 +121,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 2
-  _maxHp: 1
+  _maxHp: 999
   _atk: 1
-  _friendLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  _enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
+  _friendLayer: 0
+  _enemyLayer: 0
+  _followSpeed: 0
+  _warpDistance: 3
+  _near: 0
+  _repopDistance: 10
   _jumpSideEvent:
     m_PersistentCalls:
       m_Calls: []
-  _warpDistance: 3
   _player: {fileID: 0}
   _moveSpeed: 1
   _setArea: 0.5
