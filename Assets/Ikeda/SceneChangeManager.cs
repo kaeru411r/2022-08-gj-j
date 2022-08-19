@@ -34,7 +34,8 @@ public class SceneChangeManager : MonoBehaviour
     {
         if (_instance)
         {
-            Destroy(_instance);
+            Destroy(gameObject);
+            return;
         }
         _instance = this;
     }
@@ -52,6 +53,23 @@ public class SceneChangeManager : MonoBehaviour
 
         SceneManager.LoadScene(index);
     }
+
+    public void LoadStage(int index)
+    {
+        if (index < 0) return;
+        if (_stages.Length - 1 < index) return;
+
+        SceneManager.LoadScene((int)_stages[index].StageIndex);
+    }
+
+    public void StageUnlock(int index)
+    {
+        if (index < 0) return;
+        if (_stages.Length - 1 < index) return;
+        _stages[index].IsOpen = true;
+    }
+
+
     private void OnValidate()
     {
         if (_stages != null)
