@@ -600,6 +600,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameObject (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 2343342918990720922, guid: 8fff8694fb25b594fb62546116493293, type: 3}
+      propertyPath: _stages.Array.data[0].IsOpen
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2343342918990720923, guid: 8fff8694fb25b594fb62546116493293, type: 3}
       propertyPath: m_RootOrder
       value: 7
