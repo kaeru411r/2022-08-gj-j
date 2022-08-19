@@ -6,18 +6,6 @@ public class IkedaTestEnemy : EnemyBase
 {
     public override void EnemyUpdate()
     {
-        throw new System.NotImplementedException();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        //throw new System.NotImplementedException();
     }
 }
