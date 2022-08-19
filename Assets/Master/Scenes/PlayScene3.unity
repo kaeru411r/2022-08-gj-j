@@ -985,7 +985,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7136747885541334902, guid: 351ed3ac6a29dd5499fe7e0e1c03cf2f, type: 3}
       propertyPath: _maxHp
-      value: 1
+      value: 999
       objectReference: {fileID: 0}
     - target: {fileID: 7136747885541334902, guid: 351ed3ac6a29dd5499fe7e0e1c03cf2f, type: 3}
       propertyPath: _player
