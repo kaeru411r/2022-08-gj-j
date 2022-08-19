@@ -110,12 +110,14 @@ public class PlayerController : MonoBehaviour
             minas = -1;
         }
     }
-    public void GetAlly(EnemyBase ally)
+    public bool GetAlly(EnemyBase ally)
     {
         if(_allyList.Count < _max)
         {
             _allyList.Add(ally);
+            return true;
         }
+        return false;
     }
     public void RemoveAlly(EnemyBase ally)
     {
