@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public float _max = 5f;
     [SerializeField] GameObject _brainLenge;
     [SerializeField] GameObject _mazzle;
+    [SerializeField] GameObject _gameOverCanvas;
     List<EnemyBase> _allyList = new List<EnemyBase>();
     Animator _anim;
     AudioSource _audio;
@@ -139,7 +140,12 @@ public class PlayerController : MonoBehaviour
         if(collision.gameObject.tag == "Enemy")
         {
             Debug.Log("Gameover");
+            if(_gameOverCanvas)
+            {
+                _gameOverCanvas.SetActive(true);
+            }
             _gameover = true;
+            StartCoroutine(GameOverTime());
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -147,12 +153,27 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "EnemyAttack")
         {
             Debug.Log("Gameover");
+            if (_gameOverCanvas)
+            {
+                _gameOverCanvas.SetActive(true);
+            }
+            else
+            {
+                Debug.LogWarning("GameOverCanvasをアタッチしてください。");
+            }
             _gameover = true;
+            StartCoroutine(GameOverTime());
         }
         if (collision.gameObject.tag == "Item")
         {
             _max++;
             Destroy(collision.gameObject);
         }
+    }
+    IEnumerator GameOverTime()
+    {
+        yield return new WaitForSeconds(2f);
+        Debug.Log("タイトルへ戻る");
+        SceneChangeManager.Instance.LoadScene(0);
     }
 }
