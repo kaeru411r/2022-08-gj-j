@@ -14,13 +14,17 @@ abstract public class EnemyBase : MonoBehaviour
     [Tooltip("攻撃力")]
     [SerializeField] int _atk = 1;
     [Tooltip("味方の時のレイヤー")]
-    [SerializeField] LayerMask _friendLayer;
+    [SerializeField] int _friendLayer;
     [Tooltip("敵の時のレイヤー")]
-    [SerializeField] LayerMask _enemyLayer;
-    [Tooltip("敵が味方になるときに呼ぶ")]
-    [SerializeField] UnityEvent _jumpSideEvent;
+    [SerializeField] int _enemyLayer;
+    [Tooltip("追従時の移動速度")]
+    [SerializeField] float _followSpeed;
     [Tooltip("プレイヤーにワープする距離")]
     [SerializeField] float _warpDistance = 3f;
+    [Tooltip("プレイヤーへの接近を辞める距離")]
+    [SerializeField] float _near;
+    [Tooltip("敵が味方になるときに呼ぶ")]
+    [SerializeField] UnityEvent _jumpSideEvent;
 
     /// <summary>HP</summary>
     int _hp;
@@ -193,6 +197,14 @@ abstract public class EnemyBase : MonoBehaviour
         if(Vector3.Distance(target, transform.position) >= _warpDistance)
         {
             transform.position = target;
+        }
+        else if (Vector3.Distance(target, transform.position) >= _near)
+        {
+            _rb.velocity = (target - transform.position).normalized * _followSpeed;
+        }
+        else
+        {
+            _rb.velocity = Vector2.zero;
         }
 
 
