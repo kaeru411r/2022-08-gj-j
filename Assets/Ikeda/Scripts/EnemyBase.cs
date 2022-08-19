@@ -161,6 +161,7 @@ abstract public class EnemyBase : MonoBehaviour
     {
         if (_hand == EnemyHand.Player)
         {
+            transform.position = _playerController.transform.position;
             _rb.velocity = velocity;
             _state = EnemyState.Throw;
             return true;
@@ -240,6 +241,7 @@ abstract public class EnemyBase : MonoBehaviour
         else
         {
             gameObject.SetActive(false);
+            StartCoroutine(RePop());
         }
         if(_type == EnemyType.Boss)
         {
