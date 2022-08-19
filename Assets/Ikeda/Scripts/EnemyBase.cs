@@ -108,7 +108,6 @@ abstract public class EnemyBase : MonoBehaviour
             if (hand == EnemyHand.Enemy)
             {
                 gameObject.layer = _enemyLayer;
-                Respawn();
             }
             else if (hand == EnemyHand.Player)
             {
@@ -204,7 +203,7 @@ abstract public class EnemyBase : MonoBehaviour
         }
         else
         {
-            _rb.velocity = Vector2.zero;
+            _rb.velocity = new Vector2(0, _rb.velocity.y);
         }
 
 
@@ -268,6 +267,10 @@ abstract public class EnemyBase : MonoBehaviour
             if (TryGetComponent<EnemyBase>(out enemy))
             {
                 Hit(enemy);
+            }
+            else
+            {
+                Respawn();
             }
         }
     }
