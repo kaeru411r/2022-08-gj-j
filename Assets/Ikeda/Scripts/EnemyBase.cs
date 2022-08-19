@@ -284,6 +284,10 @@ abstract public class EnemyBase : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if(collision.gameObject.layer == gameObject.layer)
+        {
+            return;
+        }
         if (_state == EnemyState.Throw)
         {
             EnemyBase enemy;
