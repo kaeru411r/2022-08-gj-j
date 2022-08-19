@@ -9,7 +9,7 @@ public class IkedaTestAction : MonoBehaviour
     void Start()
     {
         EnemyBase.OnDamage += Damage;
-        _enemyBase.Damage(1);
+        //_enemyBase.Damage(1);
     }
 
     // Update is called once per frame

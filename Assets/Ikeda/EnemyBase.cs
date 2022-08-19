@@ -53,7 +53,7 @@ abstract public class EnemyBase : MonoBehaviour
         _respawnPoint = transform.position;
     }
 
-    private void Start()
+    public void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _playerController = FindObjectOfType<PlayerController>();
@@ -169,6 +169,11 @@ abstract public class EnemyBase : MonoBehaviour
     /// </summary>
     void Respawn()
     {
+        JumpSide(EnemyHand.Enemy);
+        if (_playerController)
+        {
+            _playerController.RemoveAlly(this);
+        }
         _state = EnemyState.Idol;
         transform.position = _respawnPoint;
         HPReset();
@@ -189,6 +194,7 @@ abstract public class EnemyBase : MonoBehaviour
         {
             transform.position = target;
         }
+
 
     }
 
@@ -246,6 +252,20 @@ abstract public class EnemyBase : MonoBehaviour
             if (TryGetComponent<EnemyBase>(out enemy))
             {
                 Hit(enemy);
+            }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //マジックナンバー使用
+        if(collision.gameObject.layer == 1 << 3)
+        {
+            PlayerController p;
+            if(collision.gameObject.TryGetComponent<PlayerController>(out p))
+            {
+                p.GetAlly(this);
+                JumpSide(EnemyHand.Player);
             }
         }
     }
