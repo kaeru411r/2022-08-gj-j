@@ -218,6 +218,10 @@ abstract public class EnemyBase : MonoBehaviour
     void Death()
     {
         Destroy(gameObject);
+        if(_type == EnemyType.Boss)
+        {
+            SceneChangeManager.Instance.StageCrear();
+        }
     }
 
     /// <summary>
