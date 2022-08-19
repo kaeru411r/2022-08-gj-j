@@ -54,34 +54,6 @@ public class StageSelectManager : MonoBehaviour, IPointerClickHandler
         {
             Debug.LogWarning($"{nameof(_buttonPrefab)}‚ªƒAƒTƒCƒ“‚³‚ê‚Ä‚Ü‚¹‚ñ");
         }
-        _buttons = new GameObject[SceneChangeManager.Instance.Stages.Length];
-        for (int i = 0; i < SceneChangeManager.Instance.Stages.Length; i++)
-        {
-            GameObject g = ButtonGenerate();
-            g.transform.SetParent(transform);
-            _buttons[i] = g;
-            g.name = $"button{i + 1}";
-            Image img = GetImage(g);
-            if (_button)
-            {
-                img.sprite = _button;
-            }
-            GetText(g).text = $"{i + 1}";
-            if (!SceneChangeManager.Instance.Stages[i].IsOpen)
-            {
-                //img.raycastTarget = false;
-                GameObject g2 = ButtonGenerate();
-                g2.transform.SetParent(g.transform);
-                g2.name = $"lock{i + 1}";
-                Image img2 = GetImage(g2);
-                if (_lock)
-                {
-                    img2.sprite = _lock;
-                }
-                GetText(g2).text = "";
-                //img2.raycastTarget = false;
-            }
-        }
         StartCoroutine(StartSet());
     }
 
@@ -137,9 +109,41 @@ public class StageSelectManager : MonoBehaviour, IPointerClickHandler
 
     IEnumerator StartSet()
     {
+        while (SceneChangeManager.Instance)
+        {
+            yield return null;
+        }
         while (SceneChangeManager.Instance.Stages == null)
         {
             yield return null;
+        }
+        _buttons = new GameObject[SceneChangeManager.Instance.Stages.Length];
+        for (int i = 0; i < SceneChangeManager.Instance.Stages.Length; i++)
+        {
+            GameObject g = ButtonGenerate();
+            g.transform.SetParent(transform);
+            _buttons[i] = g;
+            g.name = $"button{i + 1}";
+            Image img = GetImage(g);
+            if (_button)
+            {
+                img.sprite = _button;
+            }
+            GetText(g).text = $"{i + 1}";
+            if (!SceneChangeManager.Instance.Stages[i].IsOpen)
+            {
+                //img.raycastTarget = false;
+                GameObject g2 = ButtonGenerate();
+                g2.transform.SetParent(g.transform);
+                g2.name = $"lock{i + 1}";
+                Image img2 = GetImage(g2);
+                if (_lock)
+                {
+                    img2.sprite = _lock;
+                }
+                GetText(g2).text = "";
+                //img2.raycastTarget = false;
+            }
         }
 
     }
