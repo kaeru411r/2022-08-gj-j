@@ -9,8 +9,6 @@ public class UiManeger : MonoBehaviour
     [SerializeField] TextMeshProUGUI _LifeText;
     [SerializeField] TextMeshProUGUI _LimitText;
 
-    [SerializeField] GameObject _Boss;
-
     [SerializeField] Image _upperlimit;
 
     [SerializeField] float _Limit;
@@ -18,7 +16,6 @@ public class UiManeger : MonoBehaviour
     [SerializeField] float _limitCount;
 
     [SerializeField] float _limitCountup;
-    [SerializeField] List<Image> _limitImage = new List<Image>();
 
     private int _life;
     public void Start()

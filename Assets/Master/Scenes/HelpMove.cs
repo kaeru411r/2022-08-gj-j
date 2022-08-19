@@ -4,25 +4,44 @@ using UnityEngine;
 
 public class HelpMove : MonoBehaviour
 {
-    [SerializeField] GameObject _help1;
-    [SerializeField] GameObject _help2;
+    [SerializeField] GameObject[] _helps;
+
+    int _index = 0;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        if(_helps.Length <= 0)
+        {
+            Destroy(this);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Open()
     {
-        
+        _helps[0].SetActive(true);
+        _index = 0;
     }
-    public void HelpMoves()
+
+    public void MoveNext()
     {
-        _help1.gameObject.SetActive(false);
-        _help2.gameObject.SetActive(true);
+        _helps[_index].SetActive(false);
+        _index++;
+        _helps[_index].SetActive(true);
+    }
+
+    public void MovePrev()
+    {
+        _helps[_index].SetActive(false);
+        _index--;
+        _helps[_index].SetActive(true);
+    }
+
+    public void Close()
+    {
+        _helps[_index].SetActive(false);
+        _index = 0;
     }
     public void GameClose()
     {
