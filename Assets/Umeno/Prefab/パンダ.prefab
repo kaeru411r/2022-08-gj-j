@@ -160,16 +160,14 @@ MonoBehaviour:
   _type: 0
   _maxHp: 1
   _atk: 1
-  _friendLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  _enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
+  _friendLayer: 7
+  _enemyLayer: 0
+  _followSpeed: 10
+  _warpDistance: 10
+  _near: 2
   _jumpSideEvent:
     m_PersistentCalls:
       m_Calls: []
-  _warpDistance: 3
   _player: {fileID: 0}
   _moveSpeed: 0
   _setArea: 0
