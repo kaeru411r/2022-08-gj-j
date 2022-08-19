@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour
     }
     public void GetAlly(EnemyBase ally)
     {
-        if(_allyList.Count > _max)
+        if(_allyList.Count < _max)
         {
             _allyList.Add(ally);
         }
@@ -147,7 +147,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Gameover");
             _gameover = true;
         }
-        if (collision.gameObject.tag == "item")
+        if (collision.gameObject.tag == "Item")
         {
             _max++;
             Destroy(collision.gameObject);
