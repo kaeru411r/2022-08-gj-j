@@ -147,7 +147,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Gameover");
             _gameover = true;
         }
-        if (collision.gameObject.tag == "item")
+        if (collision.gameObject.tag == "Item")
         {
             _max++;
             Destroy(collision.gameObject);
