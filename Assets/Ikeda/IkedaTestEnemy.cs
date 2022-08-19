@@ -6,8 +6,6 @@ public class IkedaTestEnemy : EnemyBase
 {
     public override void EnemyUpdate()
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
-
-
 }
