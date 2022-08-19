@@ -30,7 +30,6 @@ public class StageSelectManager : MonoBehaviour, IPointerClickHandler
             {
                 if (_buttons[i] == go)
                 {
-                    Debug.Log(go.name);
                     SceneChangeManager.Instance.LoadStage(i);
                 }
             }
