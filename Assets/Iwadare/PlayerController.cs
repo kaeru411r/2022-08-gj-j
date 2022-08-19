@@ -59,7 +59,10 @@ public class PlayerController : MonoBehaviour
             {
                 //Vector2 vector = new Vector2(Mathf.Abs(_mouse.mousePosition.x - transform.position.x) * minas, _mouse.mousePosition.y);
                 Vector2 vector = new Vector2(6f * minas, 6f);
-                _allyList[0].Throw(vector);
+                if (_allyList != null)
+                {
+                    _allyList[0].Throw(vector);
+                }
                 Debug.Log("ë≈ÇøèoÇ≥ÇÍÇΩÇºÅIÅI");
             }
             if(h != 0 && !_audioplay && _jump)
