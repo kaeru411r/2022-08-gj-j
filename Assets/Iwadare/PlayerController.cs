@@ -21,14 +21,14 @@ public class PlayerController : MonoBehaviour
     bool _gameover;
     bool _gameoverjump;
     bool _audioplay;
-    bool _hand;
-    [SerializeField] CrosshairController _mouse;
+    //[SerializeField] CrosshairController _mouse;
+    public List<EnemyBase> AllyList { get => _allyList; }
     // Start is called before the first frame update
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
-        _mouse = GetComponent<CrosshairController>();
+        //_mouse = GetComponent<CrosshairController>();
         _audio = GetComponent<AudioSource>();
         _hide = GetComponent<EnemyBase>();
     }
