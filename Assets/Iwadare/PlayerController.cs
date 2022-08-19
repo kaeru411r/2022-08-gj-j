@@ -8,18 +8,20 @@ public class PlayerController : MonoBehaviour
     float h;
     [SerializeField] float _speed = 5f;
     [SerializeField] float _jumpPower = 5f;
-    [SerializeField] float _max = 5f;
+    public float _max = 5f;
     [SerializeField] GameObject _brainLenge;
     [SerializeField] GameObject _mazzle;
     List<EnemyBase> _allyList = new List<EnemyBase>();
     Animator _anim;
     AudioSource _audio;
+    EnemyBase _hide;
     float minas = 1;
     bool _jump;
     bool _brain;
     bool _gameover;
     bool _gameoverjump;
     bool _audioplay;
+    bool _hand;
     [SerializeField] CrosshairController _mouse;
     // Start is called before the first frame update
     void Start()
@@ -28,6 +30,7 @@ public class PlayerController : MonoBehaviour
         _anim = GetComponent<Animator>();
         _mouse = GetComponent<CrosshairController>();
         _audio = GetComponent<AudioSource>();
+        _hide = GetComponent<EnemyBase>();
     }
 
     // Update is called once per frame
@@ -36,7 +39,7 @@ public class PlayerController : MonoBehaviour
         if (!_gameover)
         {
             h = Input.GetAxis("Horizontal");
-            Debug.Log(h);
+            //Debug.Log(h);
             //Vector2 velocity = _rb.velocity;
             Flip(h);
             if (Input.GetButtonDown("Jump") && _jump)
@@ -54,7 +57,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetButtonDown("Fire1"))
             {
                 //Vector2 vector = new Vector2(Mathf.Abs(_mouse.mousePosition.x - transform.position.x) * minas, _mouse.mousePosition.y);
-                Vector2 vector = new Vector2(2f * minas, 8f);
+                Vector2 vector = new Vector2(6f * minas, 6f);
                 _allyList[0].Throw(vector);
                 Debug.Log("ë≈ÇøèoÇ≥ÇÍÇΩÇºÅIÅI");
             }
