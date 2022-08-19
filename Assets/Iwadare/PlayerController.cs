@@ -110,12 +110,14 @@ public class PlayerController : MonoBehaviour
             minas = -1;
         }
     }
-    public void GetAlly(EnemyBase ally)
+    public bool GetAlly(EnemyBase ally)
     {
-        if(_allyList.Count > _max)
+        if(_allyList.Count < _max)
         {
             _allyList.Add(ally);
+            return true;
         }
+        return false;
     }
     public void RemoveAlly(EnemyBase ally)
     {
@@ -147,7 +149,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Gameover");
             _gameover = true;
         }
-        if (collision.gameObject.tag == "item")
+        if (collision.gameObject.tag == "Item")
         {
             _max++;
             Destroy(collision.gameObject);
