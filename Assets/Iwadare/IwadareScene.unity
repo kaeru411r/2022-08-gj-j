@@ -903,8 +903,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aab0291060272ce499c951beb6750a85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 2
-  y: 10
+  x: 6
+  y: 6
 --- !u!61 &1637250635
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1344,6 +1344,10 @@ PrefabInstance:
       propertyPath: _crosshair
       value: 
       objectReference: {fileID: 1843303947}
+    - target: {fileID: 2276345540936651984, guid: 95f9661e9315a5f41a20be8c309dfbc2, type: 3}
+      propertyPath: m_GravityScale
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2276345540936651985, guid: 95f9661e9315a5f41a20be8c309dfbc2, type: 3}
       propertyPath: m_Name
       value: Player
