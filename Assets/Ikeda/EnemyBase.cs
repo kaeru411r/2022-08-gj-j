@@ -19,6 +19,8 @@ abstract public class EnemyBase : MonoBehaviour
     [SerializeField] LayerMask _enemyLayer;
     [Tooltip("敵が味方になるときに呼ぶ")]
     [SerializeField] UnityEvent _jumpSideEvent;
+    [Tooltip("プレイヤーにワープする距離")]
+    [SerializeField] float _warpDistance = 3f;
 
     /// <summary>HP</summary>
     int _hp;
@@ -30,6 +32,8 @@ abstract public class EnemyBase : MonoBehaviour
     EnemyState _state;
     /// <summary>リジッドボディ</summary>
     protected Rigidbody2D _rb;
+    /// <summary>プレイヤー</summary>
+    PlayerController _playerController;
 
     /// <summary>技能</summary>
     public EnemyType Type { get => _type; }
@@ -39,8 +43,8 @@ abstract public class EnemyBase : MonoBehaviour
     public Rigidbody2D Rb { get => _rb; }
     /// <summary>HP</summary>
     public int HP { get => _hp; }
-    
-    
+
+
     static public Action OnDamage;
 
     // Start is called before the first frame update
@@ -52,19 +56,24 @@ abstract public class EnemyBase : MonoBehaviour
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _playerController = FindObjectOfType<PlayerController>();
+        if (!_playerController)
+        {
+            Debug.LogWarning($"プレイヤーが見つかりませんでした");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(_state == EnemyState.Idol)
+        if (_state == EnemyState.Idol)
         {
             EnemyUpdate();
         }
-        else if(_state == EnemyState.Follow)
+        else if (_state == EnemyState.Follow)
         {
         }
-        else if(_state == EnemyState.Throw)
+        else if (_state == EnemyState.Throw)
         {
 
         }
@@ -72,11 +81,11 @@ abstract public class EnemyBase : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(_state == EnemyState.Idol)
+        if (_state == EnemyState.Idol)
         {
             EnemyFixedUpdate();
         }
-        else if(_state == EnemyState.Follow)
+        else if (_state == EnemyState.Follow)
         {
             FollowPlayer();
         }
@@ -89,18 +98,18 @@ abstract public class EnemyBase : MonoBehaviour
     /// <returns>勢力移動に成功したか</returns>
     virtual public bool JumpSide(EnemyHand hand)
     {
-        if(hand != _hand)
+        if (hand != _hand)
         {
-            if(hand == EnemyHand.Enemy)
+            if (hand == EnemyHand.Enemy)
             {
                 gameObject.layer = _enemyLayer;
                 Respawn();
             }
-            else if(hand == EnemyHand.Player)
+            else if (hand == EnemyHand.Player)
             {
                 gameObject.layer = _friendLayer;
                 _state = EnemyState.Follow;
-                if(_jumpSideEvent != null)
+                if (_jumpSideEvent != null)
                 {
                     _jumpSideEvent.Invoke();
                 }
@@ -119,7 +128,7 @@ abstract public class EnemyBase : MonoBehaviour
     public void Damage(int damage)
     {
         _hp -= damage;
-        if(_type == EnemyType.Boss)
+        if (_type == EnemyType.Boss)
         {
             CallOnDamage();
         }
@@ -131,7 +140,7 @@ abstract public class EnemyBase : MonoBehaviour
 
     static void CallOnDamage()
     {
-        if(OnDamage != null)
+        if (OnDamage != null)
         {
             OnDamage.Invoke();
         }
@@ -169,7 +178,17 @@ abstract public class EnemyBase : MonoBehaviour
     /// </summary>
     void FollowPlayer()
     {
-        
+        if (!_playerController)
+        {
+            return;
+        }
+
+        Vector3 target = _playerController.transform.position;
+        if(Vector3.Distance(target, transform.position) >= _warpDistance)
+        {
+            transform.position = target;
+        }
+
     }
 
 
@@ -220,10 +239,10 @@ abstract public class EnemyBase : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(_state == EnemyState.Throw)
+        if (_state == EnemyState.Throw)
         {
             EnemyBase enemy;
-            if(TryGetComponent<EnemyBase>(out enemy))
+            if (TryGetComponent<EnemyBase>(out enemy))
             {
                 Hit(enemy);
             }
@@ -235,7 +254,8 @@ abstract public class EnemyBase : MonoBehaviour
 /// <summary>
 /// 敵の勢力
 /// </summary>
-public enum EnemyHand{
+public enum EnemyHand
+{
     /// <summary>敵</summary>
     Enemy,
     /// <summary>味方</summary>
