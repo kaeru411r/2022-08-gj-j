@@ -206,6 +206,9 @@ abstract public class EnemyBase : MonoBehaviour
             _rb.velocity = new Vector2(0, _rb.velocity.y);
         }
 
+        float dir = target.x - transform.position.x;
+        transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * -(Mathf.Abs(dir) / dir), transform.localScale.y, transform.localScale.z);
+
 
     }
 
