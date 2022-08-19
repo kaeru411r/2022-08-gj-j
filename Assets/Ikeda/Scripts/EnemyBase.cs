@@ -287,7 +287,7 @@ abstract public class EnemyBase : MonoBehaviour
         if (_state == EnemyState.Throw)
         {
             EnemyBase enemy;
-            if (TryGetComponent<EnemyBase>(out enemy))
+            if (collision.gameObject.TryGetComponent<EnemyBase>(out enemy))
             {
                 Hit(enemy);
             }
