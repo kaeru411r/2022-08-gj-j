@@ -109,7 +109,7 @@ public class StageSelectManager : MonoBehaviour, IPointerClickHandler
 
     IEnumerator StartSet()
     {
-        while (SceneChangeManager.Instance)
+        while (!SceneChangeManager.Instance)
         {
             yield return null;
         }
