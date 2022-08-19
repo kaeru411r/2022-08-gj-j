@@ -5,9 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    //ˆÚ“®‚·‚éƒV[ƒ“‚Ì–¼‘O
-    [SerializeField] string _scnename;
-    [SerializeField] EnemyBase _bossEnemy;
+    static public GameManager Instance;
+
+    [SerializeField] float _time = 3f;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,5 +27,18 @@ public class GameManager : MonoBehaviour
         //{
         //    SceneManager.LoadScene(_scnename);
         //}
+    }
+
+    public void GameCrear()
+    {
+        SceneChangeManager.Instance.StageCrear();
+        StartCoroutine(EndWait());
+    }
+
+    IEnumerator EndWait()
+    {
+        yield return new WaitForSeconds(_time);
+
+        SceneChangeManager.Instance.LoadScene(0);
     }
 }

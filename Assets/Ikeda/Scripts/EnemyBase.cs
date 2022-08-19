@@ -245,7 +245,7 @@ abstract public class EnemyBase : MonoBehaviour
         }
         if(_type == EnemyType.Boss)
         {
-            SceneChangeManager.Instance.StageCrear();
+            GameManager.Instance.GameCrear();
         }
     }
 
@@ -302,11 +302,14 @@ abstract public class EnemyBase : MonoBehaviour
         //マジックナンバー使用
         if(collision.gameObject.layer == 3)
         {
-            PlayerController p = collision.gameObject.GetComponentInParent<PlayerController>();
-            if(p)
+            if (_type != EnemyType.Boss)
             {
-                p.GetAlly(this);
-                JumpSide(EnemyHand.Player);
+                PlayerController p = collision.gameObject.GetComponentInParent<PlayerController>();
+                if (p)
+                {
+                    p.GetAlly(this);
+                    JumpSide(EnemyHand.Player);
+                }
             }
         }
     }
