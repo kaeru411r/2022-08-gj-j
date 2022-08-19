@@ -29,14 +29,14 @@ abstract public class EnemyBase : MonoBehaviour
     /// <summary>エネミーの状態</summary>
     EnemyState _state;
     /// <summary>リジッドボディ</summary>
-    Rigidbody2D _rb;
+    protected Rigidbody2D _rb;
 
     /// <summary>技能</summary>
     public EnemyType Type { get => _type; }
     /// <summary>勢力</summary>
     public EnemyHand Hand { get => _hand; }
-    /// <summary>HP</summary>
-    public int HP { get => _hp;}
+    /// <summary>リジッドボディ</summary>
+    public Rigidbody2D Rb { get => _rb; }
     
     
     static public Action OnDamage;
