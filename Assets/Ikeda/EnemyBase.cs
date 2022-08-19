@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using System;
 
 [RequireComponent(typeof(Rigidbody2D))]
 abstract public class EnemyBase : MonoBehaviour
@@ -15,6 +17,8 @@ abstract public class EnemyBase : MonoBehaviour
     [SerializeField] LayerMask _friendLayer;
     [Tooltip("“G‚Ì‚ÌƒŒƒCƒ„[")]
     [SerializeField] LayerMask _enemyLayer;
+    [Tooltip("“G‚ª–¡•û‚É‚È‚é‚Æ‚«‚ÉŒÄ‚Ô")]
+    [SerializeField] UnityEvent _jumpSideEvent;
 
     /// <summary>HP</summary>
     int _hp;
@@ -33,6 +37,9 @@ abstract public class EnemyBase : MonoBehaviour
     public EnemyHand Hand { get => _hand; }
     /// <summary>HP</summary>
     public int HP { get => _hp;}
+    
+    
+    static public Action OnDamage;
 
     // Start is called before the first frame update
     void Awake()
@@ -91,6 +98,10 @@ abstract public class EnemyBase : MonoBehaviour
             {
                 gameObject.layer = _friendLayer;
                 _state = EnemyState.Follow;
+                if(_jumpSideEvent != null)
+                {
+                    _jumpSideEvent.Invoke();
+                }
             }
             _hand = hand;
             return true;
@@ -106,9 +117,18 @@ abstract public class EnemyBase : MonoBehaviour
     public void Damage(int damage)
     {
         _hp -= damage;
+        CallOnDamage();
         if (_hp <= 0)
         {
             Death();
+        }
+    }
+
+    static void CallOnDamage()
+    {
+        if(OnDamage != null)
+        {
+            OnDamage.Invoke();
         }
     }
 
