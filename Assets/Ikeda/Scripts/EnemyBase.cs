@@ -23,6 +23,8 @@ abstract public class EnemyBase : MonoBehaviour
     [SerializeField] float _warpDistance = 3f;
     [Tooltip("プレイヤーへの接近を辞める距離")]
     [SerializeField] float _near;
+    [Tooltip("門番がリポップする距離")]
+    [SerializeField] float _repopDistance = 10;
     [Tooltip("敵が味方になるときに呼ぶ")]
     [SerializeField] UnityEvent _jumpSideEvent;
 
@@ -231,11 +233,27 @@ abstract public class EnemyBase : MonoBehaviour
     /// </summary>
     void Death()
     {
-        Destroy(gameObject);
+        if (_type != EnemyType.GimmickEnemy)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
         if(_type == EnemyType.Boss)
         {
             SceneChangeManager.Instance.StageCrear();
         }
+    }
+
+    IEnumerator RePop()
+    {
+        while(Vector3.Distance(_respawnPoint, _playerController.transform.position) <= _repopDistance)
+        {
+            yield return null;
+        }
+        gameObject.SetActive(true);
     }
 
     /// <summary>
