@@ -29,8 +29,24 @@ public class StageSelectManager : MonoBehaviour, IPointerClickHandler
     // Start is called before the first frame update
     void Start()
     {
+        StartCoroutine(StartSet());
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    IEnumerator StartSet()
+    {
+        while (SceneChangeManager.Instance.Stages == null)
+        {
+            yield return null;
+        }
+
         _buttons = new GameObject[SceneChangeManager.Instance.Stages.Length];
-        for(int i = 0; i < SceneChangeManager.Instance.Stages.Length; i++)
+        for (int i = 0; i < SceneChangeManager.Instance.Stages.Length; i++)
         {
             GameObject g = new GameObject();
             g.transform.SetParent(transform);
@@ -41,13 +57,6 @@ public class StageSelectManager : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    
 
 }
 

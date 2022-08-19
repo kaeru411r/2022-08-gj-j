@@ -8,7 +8,7 @@ using System;
 abstract public class EnemyBase : MonoBehaviour
 {
     [Tooltip("‹Z”\")]
-    [SerializeField] EnemyType _type;
+    [SerializeField] EnemyType _type = EnemyType.Non;
     [Tooltip("HP‰Šú’l")]
     [SerializeField] int _maxHp = 1;
     [Tooltip("UŒ‚—Í")]
@@ -117,7 +117,6 @@ abstract public class EnemyBase : MonoBehaviour
     public void Damage(int damage)
     {
         _hp -= damage;
-        CallOnDamage();
         if (_hp <= 0)
         {
             Death();
