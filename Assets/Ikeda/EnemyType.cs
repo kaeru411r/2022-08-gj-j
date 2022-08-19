@@ -4,5 +4,5 @@
 /// </summary>
 public enum EnemyType
 {
-
+    Non,
 }
