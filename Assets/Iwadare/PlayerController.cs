@@ -13,11 +13,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject _mazzle;
     List<EnemyBase> _allyList = new List<EnemyBase>();
     Animator _anim;
+    AudioSource _audio;
     float minas = 1;
     bool _jump;
     bool _brain;
     bool _gameover;
     bool _gameoverjump;
+    bool _audioplay;
     [SerializeField] CrosshairController _mouse;
     // Start is called before the first frame update
     void Start()
@@ -25,6 +27,7 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
         _mouse = GetComponent<CrosshairController>();
+        _audio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -33,6 +36,7 @@ public class PlayerController : MonoBehaviour
         if (!_gameover)
         {
             h = Input.GetAxis("Horizontal");
+            Debug.Log(h);
             //Vector2 velocity = _rb.velocity;
             Flip(h);
             if (Input.GetButtonDown("Jump") && _jump)
@@ -53,6 +57,16 @@ public class PlayerController : MonoBehaviour
                 Vector2 vector = new Vector2(2f * minas, 8f);
                 _allyList[0].Throw(vector);
                 Debug.Log("ë≈ÇøèoÇ≥ÇÍÇΩÇºÅIÅI");
+            }
+            if(h != 0 && !_audioplay && _jump)
+            {
+                _audio.Play();
+                _audioplay = true;
+            }
+            else
+            {
+                _audio.Pause();
+                _audioplay = false;
             }
         }
         else

@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 519044169}
   - component: {fileID: 519044168}
   m_Layer: 0
-  m_Name: "\u6D17\u813303"
+  m_Name: Sleep2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 529227572}
   - component: {fileID: 529227571}
   m_Layer: 0
-  m_Name: "\u8D70\u308A01"
+  m_Name: Run
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -345,7 +345,7 @@ GameObject:
   - component: {fileID: 991266685}
   - component: {fileID: 991266684}
   m_Layer: 0
-  m_Name: "\u30B8\u30E3\u30F3\u30D701"
+  m_Name: Jump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -560,9 +560,10 @@ GameObject:
   - component: {fileID: 1269473939}
   - component: {fileID: 1269473938}
   - component: {fileID: 1269473937}
+  - component: {fileID: 1269473940}
   m_Layer: 6
   m_Name: Square
-  m_TagString: EnemyAttack
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -577,7 +578,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -653,13 +654,34 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1269473936}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.06, y: -2.52, z: 0}
+  m_LocalPosition: {x: 2.7, y: -2.44, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &1269473940
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1269473936}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &1526531483
 GameObject:
   m_ObjectHideFlags: 0
@@ -672,7 +694,7 @@ GameObject:
   - component: {fileID: 1526531485}
   - component: {fileID: 1526531484}
   m_Layer: 0
-  m_Name: "\u6D17\u813301"
+  m_Name: Sleep
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -882,7 +904,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   x: 2
-  y: 8
+  y: 10
 --- !u!61 &1637250635
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1107,7 +1129,7 @@ GameObject:
   - component: {fileID: 1873763289}
   - component: {fileID: 1873763288}
   m_Layer: 0
-  m_Name: "\u30B8\u30E3\u30F3\u30D704"
+  m_Name: Jump2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1376,11 +1398,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4531824326626175084, guid: 95f9661e9315a5f41a20be8c309dfbc2, type: 3}
       propertyPath: Loop
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4531824326626175084, guid: 95f9661e9315a5f41a20be8c309dfbc2, type: 3}
+      propertyPath: m_Pitch
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4531824326626175084, guid: 95f9661e9315a5f41a20be8c309dfbc2, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: b2b0877a8363cac49aff216cb8ae5aeb, type: 3}
+    - target: {fileID: 4531824326626175084, guid: 95f9661e9315a5f41a20be8c309dfbc2, type: 3}
       propertyPath: m_PlayOnAwake
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 95f9661e9315a5f41a20be8c309dfbc2, type: 3}
