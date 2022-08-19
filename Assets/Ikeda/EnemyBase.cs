@@ -61,6 +61,7 @@ abstract public class EnemyBase : MonoBehaviour
         {
             Debug.LogWarning($"ƒvƒŒƒCƒ„[‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
         }
+        HPReset();
     }
 
     // Update is called once per frame
