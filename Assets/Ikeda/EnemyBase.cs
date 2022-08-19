@@ -255,14 +255,13 @@ abstract public class EnemyBase : MonoBehaviour
             }
         }
     }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //マジックナンバー使用
-        if(collision.gameObject.layer == 1 << 3)
+        if(collision.gameObject.layer == 3)
         {
-            PlayerController p;
-            if(collision.gameObject.TryGetComponent<PlayerController>(out p))
+            PlayerController p = collision.gameObject.GetComponentInParent<PlayerController>();
+            if(p)
             {
                 p.GetAlly(this);
                 JumpSide(EnemyHand.Player);
