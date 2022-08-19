@@ -50,8 +50,11 @@ public class SceneChangeManager : MonoBehaviour
 
     public void LoadScene(int index)
     {
-        if (index < 0) return;
-        if (EditorBuildSettings.scenes.Length < index) return;
+        Scene s = SceneManager.GetSceneAt(index);
+        if (!s.IsValid())
+        {
+            return;
+        }
 
         SceneManager.LoadScene(index);
     }
