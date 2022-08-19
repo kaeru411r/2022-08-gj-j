@@ -12,17 +12,16 @@ public class BossEnemyController : EnemyBase
     [SerializeField] float _attackStart;
     [SerializeField] float _attackEnd;
     Animator _anim;
-    Rigidbody2D _rb2;
-    public float _timer;
+    float _timer;
 
     private void Start()
     {
-        _rb2 = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
+        base.Start();
     }
     public override void EnemyUpdate()
     {
-        //base.Start();
+        
         float dir = Vector2.Distance(_player.position, transform.position);
         var EnemyLocalScale = transform.localScale;
         //プレイヤーがエネミーより左側に行ったらローカルスケールを変更する
@@ -39,7 +38,7 @@ public class BossEnemyController : EnemyBase
         if (dir <= _attackArea)
         {
             _timer += Time.deltaTime;
-            _rb2.velocity = (_player.position - transform.position).normalized * _moveSpeed;
+            Rb.velocity = (_player.position - transform.position).normalized * _moveSpeed;
             if (_timer >= _attackIntarval)
             {
                 StartCoroutine(EnemyAttack());

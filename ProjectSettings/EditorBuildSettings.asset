@@ -6,15 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Ikeda/Scenes/New Scene.unity
+    path: Assets/Master/Scenes/New Scene.unity
     guid: b5a3e185a91ea844089741056bb53c74
   - enabled: 1
-    path: Assets/Ikeda/Scenes/PlayScene1.unity
+    path: Assets/Master/Scenes/PlayScene1.unity
     guid: 43202790cfac069458c5779ac1ccc01b
   - enabled: 1
-    path: Assets/Ikeda/Scenes/PlayScene2.unity
+    path: Assets/Master/Scenes/PlayScene2.unity
     guid: b819fa61410d96c4e8d907a4c69fa8c2
   - enabled: 1
-    path: Assets/Ikeda/Scenes/PlayScene3.unity
+    path: Assets/Master/Scenes/PlayScene3.unity
     guid: f5421e43c4c27c248aa117c03ad67a0a
   m_configObjects: {}

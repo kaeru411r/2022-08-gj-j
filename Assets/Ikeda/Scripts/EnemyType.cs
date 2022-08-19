@@ -6,4 +6,5 @@ public enum EnemyType
 {
     Non,
     Boss,
+    GimmickEnemy,
 }
